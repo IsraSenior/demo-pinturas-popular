@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   console.log("body", body);
+  const url = "https://demo-pinturas-popular.vercel.app/"
 
   // Lanza el navegador
   const browser = await puppeteer.launch({
@@ -20,12 +21,9 @@ export default defineEventHandler(async (event) => {
   // Establece el tamaño de la ventana.
   await page.setViewport({ width: 1280, height: 720 });
   // Carga tu HTML con TailwindCSS
-  await page.goto(`http://localhost:3000/ficha-tecnica?productID=${body.productID}`, {
+  await page.goto(`${url}ficha-tecnica?productID=${body.productID}`, {
     waitUntil: "networkidle0",
   });
-  // await page.goto(`${config.public.baseUrl}ficha-tecnica?token=${body.jwt}`, {
-  //   waitUntil: "networkidle0",
-  // });
   // await page.evaluate(() => setTimeout(() => {}, 20000));
   await page.waitForSelector("#loaded-content", { timeout: 10000 });
 
@@ -41,10 +39,10 @@ export default defineEventHandler(async (event) => {
     }
   }, selectorToRemove);
 
-  const pdfName = `ficha-tecnica.pdf`;
+  // const pdfName = `ficha-tecnica.pdf`;
   // // Genera el PDF
   const pdfBuffer = await page.pdf({
-    path: `./public/fichas-tecnica/${pdfName}`, // Local store
+    path: `./public/fichas-tecnica/${body.productID}.pdf`, // Local store
     format: "A4",
     // pageRanges: '1-8',
     printBackground: true,
