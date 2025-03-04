@@ -3,10 +3,9 @@ import puppeteer from "puppeteer";
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig(event);
   const body = await readBody(event);
-  // const body = JSON.parse(JSON.parse(bodyString));
-
+  const content = JSON.parse(body);
   console.log("body", body);
-  return JSON.parse(body);
+  return content.productID;
   // const url = "https://demo-pinturas-popular.vercel.app/";
 
   // // // Lanza el navegador
