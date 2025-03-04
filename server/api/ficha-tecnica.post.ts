@@ -5,8 +5,8 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   // const body = JSON.parse(JSON.parse(bodyString));
 
-  console.log("body", body);
-  return body;
+  console.log("body", JSON.parse(body));
+  return JSON.parse(body);
   // const url = "https://demo-pinturas-popular.vercel.app/";
 
   // // // Lanza el navegador
