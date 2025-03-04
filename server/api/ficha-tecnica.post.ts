@@ -4,49 +4,49 @@ export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig(event);
   const body = await readBody(event);
   const content = JSON.parse(body);
-  
+
   console.log("body", body);
-  return content?.productID;
-  // const url = "https://demo-pinturas-popular.vercel.app/";
 
-  // // // Lanza el navegador
-  // const browser = await puppeteer.launch({
-  //   headless: true,
-  //   ignoreDefaultArgs: ["--disable-extensions"],
-  //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  // });
-  // // Abre una nueva página
-  // const page = await browser.newPage();
+  const url = "https://demo-pinturas-popular.vercel.app/";
 
-  // // Establece el tamaño de la ventana.
-  // await page.setViewport({ width: 1280, height: 720 });
-  // // Carga tu HTML con TailwindCSS
-  // await page.goto(`${url}ficha-tecnica?productID=${body.productID}`, {
-  //   waitUntil: "networkidle0",
-  // });
-  // // await page.evaluate(() => setTimeout(() => {}, 20000));
-  // await page.waitForSelector("#loaded-content", { timeout: 10000 });
+  // // Lanza el navegador
+  const browser = await puppeteer.launch({
+    headless: true,
+    ignoreDefaultArgs: ["--disable-extensions"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+  // Abre una nueva página
+  const page = await browser.newPage();
 
-  // await page.$$eval('[id^="ficha-content"]', (elms) =>
-  //   elms.map((elm) => elm.innerHTML)
-  // );
+  // Establece el tamaño de la ventana.
+  await page.setViewport({ width: 1280, height: 720 });
+  // Carga tu HTML con TailwindCSS
+  await page.goto(`${url}ficha-tecnica?productID=${body.productID}`, {
+    waitUntil: "networkidle0",
+  });
+  // await page.evaluate(() => setTimeout(() => {}, 20000));
+  await page.waitForSelector("#loaded-content", { timeout: 10000 });
 
-  // const selectorToRemove = ".noshow-pdf";
-  // await page.evaluate((sel) => {
-  //   const elements = document.querySelectorAll(sel);
-  //   for (let i = 0; i < elements.length; i++) {
-  //     elements[i].parentNode.removeChild(elements[i]);
-  //   }
-  // }, selectorToRemove);
+  await page.$$eval('[id^="ficha-content"]', (elms) =>
+    elms.map((elm) => elm.innerHTML)
+  );
 
-  // // const pdfName = `ficha-tecnica.pdf`;
-  // // // Genera el PDF
-  // const pdfBuffer = await page.pdf({
-  //   path: `./public/fichas-tecnica/${body.productID}.pdf`, // Local store
-  //   format: "A4",
-  //   // pageRanges: '1-8',
-  //   printBackground: true,
-  // });
+  const selectorToRemove = ".noshow-pdf";
+  await page.evaluate((sel) => {
+    const elements = document.querySelectorAll(sel);
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].parentNode.removeChild(elements[i]);
+    }
+  }, selectorToRemove);
+
+  // const pdfName = `ficha-tecnica.pdf`;
+  // // Genera el PDF
+  const pdfBuffer = await page.pdf({
+    path: `./public/fichas-tecnica/${body.productID}.pdf`, // Local store
+    format: "A4",
+    // pageRanges: '1-8',
+    printBackground: true,
+  });
 
   // // // // Cierra el navegador
   // await browser.close();
@@ -71,5 +71,5 @@ export default defineEventHandler(async (event) => {
   // const { data: uploadRes } = await uploadFile.json();
 
   // return uploadRes.id;
-  // return 200;
+  return `https://demo-pinturas-popular.vercel.app/fichas-tecnica/${body.productID}.pdf`;
 });
