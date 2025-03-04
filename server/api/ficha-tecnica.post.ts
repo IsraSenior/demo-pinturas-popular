@@ -2,8 +2,8 @@ import puppeteer from "puppeteer";
 
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig(event);
-  const bodyString = await readBody(event);
-  const body = JSON.parse(JSON.parse(bodyString));
+  const body = await readBody(event);
+  // const body = JSON.parse(JSON.parse(bodyString));
 
   console.log("body", body);
   return body;
