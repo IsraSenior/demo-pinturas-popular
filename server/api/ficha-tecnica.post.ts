@@ -4,8 +4,9 @@ export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig(event);
   const body = await readBody(event);
   const content = JSON.parse(body);
+  
   console.log("body", body);
-  return content.productID;
+  return content?.productID;
   // const url = "https://demo-pinturas-popular.vercel.app/";
 
   // // // Lanza el navegador
