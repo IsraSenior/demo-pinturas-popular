@@ -1,15 +1,14 @@
-import fs from "fs";
-import path from "path";
 import puppeteer from "puppeteer";
 
 export default defineEventHandler(async (event) => {
   // const config = useRuntimeConfig(event);
-  const body = await readBody(event);
+  const bodyString = await readBody(event);
+  const body = JSON.parse(JSON.parse(bodyString));
 
-  console.log("body", body);
-  const url = "https://demo-pinturas-popular.vercel.app/"
+  console.log("body parsed", body.productID);
+  const url = "https://demo-pinturas-popular.vercel.app/";
 
-  // Lanza el navegador
+  // // Lanza el navegador
   const browser = await puppeteer.launch({
     headless: true,
     ignoreDefaultArgs: ["--disable-extensions"],
@@ -71,5 +70,5 @@ export default defineEventHandler(async (event) => {
   // const { data: uploadRes } = await uploadFile.json();
 
   // return uploadRes.id;
-  return 200
+  return 200;
 });
