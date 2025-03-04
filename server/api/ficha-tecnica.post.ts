@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   // const body = JSON.parse(JSON.parse(bodyString));
 
   console.log("body", body);
-  return body.productID;
+  return typeof body;
   // const url = "https://demo-pinturas-popular.vercel.app/";
 
   // // // Lanza el navegador
